@@ -14,7 +14,23 @@ dependencies {
     implementation(libs.gradle)
 }
 
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-    jvmTarget = "17"
+// Configure JVM toolchain for all projects in this build
+subprojects {
+    val jvmVersion = 21
+
+    // Apply to Kotlin projects
+    plugins.withType<org.jetbrains.kotlin.gradle.plugin.KotlinBasePlugin>().configureEach {
+        kotlin {
+            jvmToolchain(jvmVersion)
+        }
+    }
+
+    // Apply to Java projects
+    plugins.withType<JavaPlugin>().configureEach {
+        java {
+            toolchain {
+                languageVersion.set(JavaLanguageVersion.of(jvmVersion))
+            }
+        }
+    }
 }

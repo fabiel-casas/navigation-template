@@ -1,5 +1,6 @@
 package com.zagart.navigation.template.feature.bonus.presentation.bonusbox
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.zagart.navigation.template.feature.bonus.domain.BonusGroupRepository
 import com.zagart.navigation.template.feature.bonus.ui.bonusbox.AdvertisementViewData
@@ -10,10 +11,13 @@ import com.zagart.navigation.template.feature.bonus.ui.components.models.BonusLa
 import com.zagart.navigation.template.feature.product.domain.ProductRepository
 import com.zagart.navigation.template.feature.product.ui.components.ProductViewData
 import com.zagart.navigation.template.presentation.navigation.BonusBoxDestination
+import com.zagart.navigation.template.presentation.navigation.CookingBackstack
 import com.zagart.navigation.template.presentation.navigation.NavigationViewModel
+import com.zagart.navigation.template.presentation.navigation.ProductsBackstack
 import com.zagart.navigation.template.presentation.navigation.isScreen
 import com.zagart.navigation.template.ui.Tab
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -54,6 +58,15 @@ class BonusBoxViewModel @Inject constructor() : NavigationViewModel() {
                     showBottomBar = destination.args.bottomBarScope.isScreen(),
                 )
             }
+        }
+    }
+
+    override fun onProductClick(product: ProductViewData, backstackIndex: Int) {
+        viewModelScope.launch {
+            val randomTime = (1000L..3000L).random()
+            Log.i("BonusBoxViewModel", "Simulating delay of $randomTime ms before navigating to ProductsBackstack")
+            delay(randomTime) // Simulate a delay for demonstration purposes
+            super.onProductClick(product, backstackIndex)
         }
     }
 }

@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,9 +32,11 @@ import com.zagart.navigation.template.presentation.navigation.Backstack
 import com.zagart.navigation.template.presentation.navigation.BonusBackstack
 import com.zagart.navigation.template.presentation.navigation.CookingBackstack
 import com.zagart.navigation.template.presentation.navigation.Destination
-import com.zagart.navigation.template.presentation.navigation.DestinationChannel
+import com.zagart.navigation.template.presentation.navigation.NavigationFlow
 import com.zagart.navigation.template.presentation.navigation.HomeBackstack
+import com.zagart.navigation.template.presentation.navigation.LocalNavigation
 import com.zagart.navigation.template.presentation.navigation.MyListBackstack
+import com.zagart.navigation.template.presentation.navigation.NavigationFlowImpl
 import com.zagart.navigation.template.presentation.navigation.ProductsBackstack
 import com.zagart.navigation.template.presentation.navigation.ScrollStateHolder
 import com.zagart.navigation.template.ui.theme.NavigationTemplateTheme
@@ -51,54 +55,67 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NavigationTemplateTheme {
-                val scrollStateHolder = remember { ScrollStateHolder() }
-                val navControllerManager = rememberNavControllerManager()
-
-                var currentBackstack: Backstack by rememberSaveable {
-                    mutableStateOf(HomeBackstack())
-                }
-                val destination = DestinationChannel
-                    .destinationFlow
-                    .collectAsStateWithLifecycle(currentBackstack)
-                    .value
-
-                var currentController = navControllerManager.getController(currentBackstack)
-
-                LaunchedEffect(destination) {
-                    if (destination is Backstack) {
-                        currentBackstack = destination
-                    } else {
-                        if (destination.args.backstackIndex >= 0) {
-                            currentBackstack = Backstack.from(destination.args.backstackIndex)
-                            currentController =
-                                navControllerManager.getController(currentBackstack)
-
-                            if (currentController.currentBackStackEntry == null) {
-                                // [Workaround] Giving some time to NavHost to initialize first destination
-                                delay(50)
-                            }
-                        }
-
-                        currentController.open(destination)
-                    }
-                }
-
-                Column {
-                    ExampleTopBar()
-                    Surface(modifier = Modifier.weight(1f)) {
-                        when (currentBackstack) {
-                            is HomeBackstack -> HomeNavHost(currentController, scrollStateHolder)
-                            is BonusBackstack -> BonusNavHost(currentController, scrollStateHolder)
-                            is CookingBackstack -> CookingNavHost(currentController)
-                            is ProductsBackstack -> ProductsNavHost(currentController)
-                            is MyListBackstack -> MyListNavHost(currentController)
-                        }
-                    }
-                    ExampleBottomBar()
+                CompositionLocalProvider(LocalNavigation provides NavigationFlowImpl()){
+                    NavTemplate()
                 }
             }
         }
         handleDeeplink(intent)
+    }
+
+    @Composable
+    private fun NavTemplate() {
+        val scrollStateHolder = remember { ScrollStateHolder() }
+        val navControllerManager = rememberNavControllerManager()
+
+        var currentBackstack: Backstack by rememberSaveable {
+            mutableStateOf(HomeBackstack())
+        }
+        val destination = LocalNavigation.current
+            .destinationFlow
+            .collectAsStateWithLifecycle(currentBackstack)
+            .value
+
+        var currentController = navControllerManager.getController(currentBackstack)
+
+        LaunchedEffect(destination) {
+            if (destination is Backstack) {
+                currentBackstack = destination
+            } else {
+                if (destination.args.backstackIndex >= 0) {
+                    currentBackstack = Backstack.from(destination.args.backstackIndex)
+                    currentController =
+                        navControllerManager.getController(currentBackstack)
+
+                    if (currentController.currentBackStackEntry == null) {
+                        // [Workaround] Giving some time to NavHost to initialize first destination
+                        delay(50)
+                    }
+                }
+
+                currentController.open(destination)
+            }
+        }
+
+        Column {
+            ExampleTopBar()
+            Surface(modifier = Modifier.weight(1f)) {
+                when (currentBackstack) {
+                    is HomeBackstack -> HomeNavHost(
+                        currentController,
+                        scrollStateHolder
+                    )
+                    is BonusBackstack -> BonusNavHost(
+                        currentController,
+                        scrollStateHolder
+                    )
+                    is CookingBackstack -> CookingNavHost(currentController)
+                    is ProductsBackstack -> ProductsNavHost(currentController)
+                    is MyListBackstack -> MyListNavHost(currentController)
+                }
+            }
+            ExampleBottomBar()
+        }
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -124,7 +141,7 @@ private fun handleDeeplink(intent: Intent) {
 
     coroutineScope.launch {
         destinations.forEach {
-            DestinationChannel.send(it)
+//            NavigationFlow.send(it)
             //TODO: Try different destination channel implementations
             delay(50) //controller can't handle destinations faster
         }

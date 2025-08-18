@@ -13,8 +13,6 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun DummyScreen(
     title: String,
-    tabIndex: Int,
-    onNavigationItemClick: (index: Int) -> Unit,
     modifier: Modifier = Modifier,
     content: String = "Some fancy description",
 ) {

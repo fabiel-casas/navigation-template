@@ -11,6 +11,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zagart.navigation.template.feature.bonus.ui.segment.BonusGroupActions
 import com.zagart.navigation.template.feature.bonus.ui.segment.BonusGroupScreenUi
 import com.zagart.navigation.template.presentation.navigation.BonusGroupDestination
+import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
 
 @Composable
 fun BonusGroupScreen(
@@ -23,13 +24,13 @@ fun BonusGroupScreen(
         BonusGroupActions(
             onBack = viewModel::onBack,
             onProductClick = viewModel::onProductClick,
-            onBottomBarItemClick = viewModel::onBottomBarItemClick
         )
     }
 
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
+    viewModel.collectNavigationEvents()
 
     BackHandler(onBack = viewModel::onBack)
     BonusGroupScreenUi(

@@ -13,6 +13,7 @@ import com.zagart.navigation.template.feature.bonus.ui.bonusbox.BonusBoxScreenUi
 import com.zagart.navigation.template.feature.bonus.ui.components.BonusLanesActions
 import com.zagart.navigation.template.presentation.navigation.BonusBoxDestination
 import com.zagart.navigation.template.presentation.navigation.ScrollStateHolder
+import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
 
 @Composable
 fun BonusBoxScreen(
@@ -32,13 +33,13 @@ fun BonusBoxScreen(
                 onProductClick = { viewModel.onProductClick(it, backstackIndex) }
             ),
             onBack = viewModel::onBack,
-            onBottomBarItemClick = viewModel::onBottomBarItemClick
         )
     }
 
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
+    viewModel.collectNavigationEvents()
 
     BackHandler(onBack = viewModel::onBack)
     BonusBoxScreenUi(

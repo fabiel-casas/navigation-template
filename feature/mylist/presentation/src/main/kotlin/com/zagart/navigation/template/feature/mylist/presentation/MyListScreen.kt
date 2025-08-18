@@ -6,6 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.zagart.navigation.template.presentation.navigation.MyListDestination
+import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
 import com.zagart.navigation.template.ui.Tab
 import com.zagart.navigation.template.ui.DummyScreen
 
@@ -18,12 +19,11 @@ fun MyListScreen(
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
+    viewModel.collectNavigationEvents()
 
     BackHandler(onBack = viewModel::onBack)
     DummyScreen(
         modifier = modifier,
         title = "My List",
-        tabIndex = Tab.MY_LIST.ordinal,
-        onNavigationItemClick = viewModel::onBottomBarItemClick,
     )
 }

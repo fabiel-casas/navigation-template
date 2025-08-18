@@ -11,6 +11,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zagart.navigation.template.feature.home.ui.HomeScreenActions
 import com.zagart.navigation.template.feature.home.ui.HomeScreenUi
 import com.zagart.navigation.template.presentation.navigation.HomeDestination
+import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
 import com.zagart.navigation.template.ui.Tab
 
 @Composable
@@ -24,7 +25,6 @@ fun HomeScreen(
     val actions = remember(viewModel) {
         HomeScreenActions(
             onBonusBoxBannerClick = { viewModel.onBonusBoxClick(Tab.BONUS.ordinal) },
-            onBottomBarItemClick = viewModel::onBottomBarItemClick,
             onProductClick = { viewData -> viewModel.onProductClick(viewData, backstackIndex) },
             onBonusGroupClick = { viewData ->
                 viewModel.onBonusGroupClick(
@@ -38,6 +38,8 @@ fun HomeScreen(
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
+    viewModel.collectNavigationEvents()
+
 
     BackHandler(onBack = viewModel::onBack)
     HomeScreenUi(

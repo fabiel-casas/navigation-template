@@ -12,6 +12,7 @@ import com.zagart.navigation.template.feature.bonus.ui.components.BonusLanesActi
 import com.zagart.navigation.template.feature.bonus.ui.overview.BonusScreenActions
 import com.zagart.navigation.template.feature.bonus.ui.overview.BonusScreenUi
 import com.zagart.navigation.template.presentation.navigation.BonusDestination
+import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
 import com.zagart.navigation.template.ui.Tab
 
 @Composable
@@ -34,13 +35,13 @@ fun BonusScreen(
                     )
                 }
             ),
-            onBottomBarItemClick = viewModel::onBottomBarItemClick,
         )
     }
 
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
+    viewModel.collectNavigationEvents()
 
     BackHandler(onBack = viewModel::onBack)
     BonusScreenUi(

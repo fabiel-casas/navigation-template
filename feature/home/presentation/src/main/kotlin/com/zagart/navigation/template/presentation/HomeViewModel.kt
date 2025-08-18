@@ -9,10 +9,12 @@ import com.zagart.navigation.template.feature.home.ui.HomeLane
 import com.zagart.navigation.template.feature.home.ui.HomeScreenState
 import com.zagart.navigation.template.feature.product.domain.ProductRepository
 import com.zagart.navigation.template.feature.product.ui.components.ProductViewData
+import com.zagart.navigation.template.presentation.navigation.BonusBoxDestination
 import com.zagart.navigation.template.presentation.navigation.BonusGroupDestination
 import com.zagart.navigation.template.presentation.navigation.Destination
 import com.zagart.navigation.template.presentation.navigation.HomeDestination
 import com.zagart.navigation.template.presentation.navigation.NavigationViewModel
+import com.zagart.navigation.template.presentation.navigation.ProductDetailsDestination
 import com.zagart.navigation.template.presentation.navigation.isScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -52,7 +54,7 @@ class HomeViewModel @Inject constructor() : NavigationViewModel() {
         }
     }
 
-    override fun onBonusGroupClick(bonusGroup: BonusGroupViewData, backstackIndex: Int) {
+    fun onBonusGroupClick(bonusGroup: BonusGroupViewData, backstackIndex: Int) {
         sendDestination(
             BonusGroupDestination(
                 id = bonusGroup.id,
@@ -61,6 +63,23 @@ class HomeViewModel @Inject constructor() : NavigationViewModel() {
                     topBarScope = Destination.ComponentScope.Application,
                     bottomBarScope = Destination.ComponentScope.Application,
                 )
+            )
+        )
+    }
+
+     fun onBonusBoxClick(backstackIndex: Int) {
+        sendDestination(
+            BonusBoxDestination(
+                args = Destination.Args(backstackIndex)
+            )
+        )
+    }
+
+    fun onProductClick(product: ProductViewData, backstackIndex: Int) {
+        sendDestination(
+            ProductDetailsDestination(
+                id = product.id,
+                args = Destination.Args(backstackIndex)
             )
         )
     }

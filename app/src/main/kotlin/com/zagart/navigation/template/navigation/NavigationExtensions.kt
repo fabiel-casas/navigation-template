@@ -65,7 +65,6 @@ inline fun <reified T : Destination> NavGraphBuilder.screen(
         sizeTransform = sizeTransform,
     ) { entry ->
         val destination = entry.toRoute<T>()
-        NavigationViewModel.currentDestinationState.value = destination
 
         content(destination)
     }

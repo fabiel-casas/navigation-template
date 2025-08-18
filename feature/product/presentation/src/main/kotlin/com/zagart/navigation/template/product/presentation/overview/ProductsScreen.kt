@@ -6,8 +6,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.zagart.navigation.template.presentation.navigation.ProductsDestination
+import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
 import com.zagart.navigation.template.ui.DummyScreen
-import com.zagart.navigation.template.ui.Tab
 
 @Composable
 fun ProductsScreen(
@@ -18,12 +18,11 @@ fun ProductsScreen(
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
+    viewModel.collectNavigationEvents()
 
     BackHandler(onBack = viewModel::onBack)
     DummyScreen(
         modifier = modifier,
         title = "Products",
-        tabIndex = Tab.PRODUCTS.ordinal,
-        onNavigationItemClick = viewModel::onBottomBarItemClick,
     )
 }

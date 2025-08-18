@@ -6,6 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.zagart.navigation.template.presentation.navigation.CookingDestination
+import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
 import com.zagart.navigation.template.ui.DummyScreen
 import com.zagart.navigation.template.ui.Tab
 
@@ -18,12 +19,11 @@ fun CookingScreen(
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
+    viewModel.collectNavigationEvents()
 
     BackHandler(onBack = viewModel::onBack)
     DummyScreen(
         modifier = modifier,
         title = "Cooking",
-        tabIndex = Tab.COOKING.ordinal,
-        onNavigationItemClick = viewModel::onBottomBarItemClick,
     )
 }

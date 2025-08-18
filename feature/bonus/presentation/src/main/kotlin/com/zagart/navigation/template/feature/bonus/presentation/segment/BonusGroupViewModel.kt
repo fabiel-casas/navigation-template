@@ -6,6 +6,7 @@ import com.zagart.navigation.template.feature.bonus.ui.components.models.BonusGr
 import com.zagart.navigation.template.feature.bonus.ui.segment.BonusGroupScreenState
 import com.zagart.navigation.template.feature.product.ui.components.ProductViewData
 import com.zagart.navigation.template.presentation.navigation.BonusGroupDestination
+import com.zagart.navigation.template.presentation.navigation.Destination
 import com.zagart.navigation.template.presentation.navigation.NavigationViewModel
 import com.zagart.navigation.template.presentation.navigation.ProductDetailsDestination
 import com.zagart.navigation.template.presentation.navigation.isScreen
@@ -42,7 +43,7 @@ class BonusGroupViewModel @Inject constructor() : NavigationViewModel() {
         sendDestination(
             ProductDetailsDestination(
                 id = product.id,
-                args = currentDestination.args
+                args = navigationDestinationFlow.value?.args ?: Destination.Args()
             )
         )
     }

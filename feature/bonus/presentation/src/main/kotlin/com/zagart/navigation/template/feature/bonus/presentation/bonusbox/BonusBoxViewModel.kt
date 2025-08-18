@@ -11,8 +11,11 @@ import com.zagart.navigation.template.feature.bonus.ui.components.models.BonusLa
 import com.zagart.navigation.template.feature.product.domain.ProductRepository
 import com.zagart.navigation.template.feature.product.ui.components.ProductViewData
 import com.zagart.navigation.template.presentation.navigation.BonusBoxDestination
+import com.zagart.navigation.template.presentation.navigation.BonusGroupDestination
 import com.zagart.navigation.template.presentation.navigation.CookingBackstack
+import com.zagart.navigation.template.presentation.navigation.Destination
 import com.zagart.navigation.template.presentation.navigation.NavigationViewModel
+import com.zagart.navigation.template.presentation.navigation.ProductDetailsDestination
 import com.zagart.navigation.template.presentation.navigation.ProductsBackstack
 import com.zagart.navigation.template.presentation.navigation.isScreen
 import com.zagart.navigation.template.ui.Tab
@@ -61,12 +64,37 @@ class BonusBoxViewModel @Inject constructor() : NavigationViewModel() {
         }
     }
 
-    override fun onProductClick(product: ProductViewData, backstackIndex: Int) {
+    fun onProductClick(product: ProductViewData, backstackIndex: Int) {
         viewModelScope.launch {
             val randomTime = (1000L..3000L).random()
-            Log.i("BonusBoxViewModel", "Simulating delay of $randomTime ms before navigating to ProductsBackstack")
+            Log.i(
+                "BonusBoxViewModel",
+                "Simulating delay of $randomTime ms before navigating to ProductsBackstack"
+            )
             delay(randomTime) // Simulate a delay for demonstration purposes
-            super.onProductClick(product, backstackIndex)
+            sendDestination(
+                ProductDetailsDestination(
+                    id = product.id,
+                    args = Destination.Args(backstackIndex)
+                )
+            )
         }
+    }
+
+    fun onBonusBoxClick(backstackIndex: Int) {
+        sendDestination(
+            BonusBoxDestination(
+                args = Destination.Args(backstackIndex)
+            )
+        )
+    }
+
+    fun onBonusGroupClick(bonusGroup: BonusGroupViewData, backstackIndex: Int) {
+        sendDestination(
+            BonusGroupDestination(
+                id = bonusGroup.id,
+                args = Destination.Args(backstackIndex)
+            )
+        )
     }
 }

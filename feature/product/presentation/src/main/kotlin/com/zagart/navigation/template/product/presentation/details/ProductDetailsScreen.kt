@@ -11,6 +11,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zagart.navigation.template.feature.product.ui.details.ProductDetailsScreenActions
 import com.zagart.navigation.template.feature.product.ui.details.ProductDetailsScreenUi
 import com.zagart.navigation.template.presentation.navigation.ProductDetailsDestination
+import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
 
 @Composable
 fun ProductDetailsScreen(
@@ -22,13 +23,13 @@ fun ProductDetailsScreen(
     val actions = remember(viewModel) {
         ProductDetailsScreenActions(
             onBack = viewModel::onBack,
-            onBottomBarItemClick = viewModel::onBottomBarItemClick
         )
     }
 
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
+    viewModel.collectNavigationEvents()
 
     BackHandler(onBack = viewModel::onBack)
     ProductDetailsScreenUi(

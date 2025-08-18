@@ -1,68 +1,39 @@
 package com.zagart.navigation.template.presentation.navigation
 
+import android.util.Log
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
-import com.zagart.navigation.template.feature.bonus.ui.components.models.BonusGroupViewData
-import com.zagart.navigation.template.feature.product.ui.components.ProductViewData
-import com.zagart.navigation.template.ui.Tab
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 open class NavigationViewModel : ViewModel() {
 
-    val currentDestination: Destination
-        get() {
-            return currentDestinationState.value!!
-        }
+    private val _navigationFlow = MutableStateFlow<Destination?>(null)
+    val navigationDestinationFlow: StateFlow<Destination?> = _navigationFlow
 
     open fun onBack() {
         sendDestination(BackDestination())
     }
 
-    open fun onBonusBoxClick(backstackIndex: Int) {
-        sendDestination(
-            BonusBoxDestination(
-                args = Destination.Args(backstackIndex)
-            )
-        )
-    }
-
-    open fun onBonusGroupClick(bonusGroup: BonusGroupViewData, backstackIndex: Int) {
-        sendDestination(
-            BonusGroupDestination(
-                id = bonusGroup.id,
-                args = Destination.Args(backstackIndex)
-            )
-        )
-    }
-
-    open fun onProductClick(product: ProductViewData, backstackIndex: Int) {
-        sendDestination(
-            ProductDetailsDestination(
-                id = product.id,
-                args = Destination.Args(backstackIndex)
-            )
-        )
-    }
-
-    open fun onBottomBarItemClick(index: Int) {
-        when (index) {
-            Tab.HOME.ordinal -> sendDestination(HomeBackstack())
-            Tab.BONUS.ordinal -> sendDestination(BonusBackstack())
-            Tab.COOKING.ordinal -> sendDestination(CookingBackstack())
-            Tab.PRODUCTS.ordinal -> sendDestination(ProductsBackstack())
-            Tab.MY_LIST.ordinal -> sendDestination(MyListBackstack())
-        }
-    }
-
     @Suppress("MemberVisibilityCanBePrivate")
     protected fun sendDestination(destination: Destination) {
-        viewModelScope.launch { DestinationChannel.send(destination) }
+        viewModelScope.launch { _navigationFlow.emit(destination) }
     }
+}
 
-    companion object {
-
-        //TODO: Check of better ways to handle state of components in application scope.
-        val currentDestinationState = MutableStateFlow<Destination?>(null)
+@Composable
+fun NavigationViewModel.collectNavigationEvents() {
+    val navigationFlow = LocalNavigation.current
+    val newDestination = navigationDestinationFlow.collectAsStateWithLifecycle(initialValue = null)
+    LaunchedEffect(newDestination.value) {
+        Log.i("Navigation Event", "New destination: ${newDestination.value}")
+        newDestination.value?.let { destination ->
+            navigationFlow.send(destination)
+        }
     }
 }

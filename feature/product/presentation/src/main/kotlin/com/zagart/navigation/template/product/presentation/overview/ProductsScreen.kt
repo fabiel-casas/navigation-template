@@ -18,7 +18,7 @@ fun ProductsScreen(
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
-    viewModel.collectNavigationEvents()
+    viewModel.collectNavigationEvents("ProductsScreen")
 
     BackHandler(onBack = viewModel::onBack)
     DummyScreen(

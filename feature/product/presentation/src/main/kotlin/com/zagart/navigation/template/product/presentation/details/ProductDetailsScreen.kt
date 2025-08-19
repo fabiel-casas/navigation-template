@@ -29,7 +29,7 @@ fun ProductDetailsScreen(
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
-    viewModel.collectNavigationEvents()
+    viewModel.collectNavigationEvents("ProductDetailsScreen")
 
     BackHandler(onBack = viewModel::onBack)
     ProductDetailsScreenUi(

@@ -41,7 +41,7 @@ fun BonusScreen(
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
-    viewModel.collectNavigationEvents()
+    viewModel.collectNavigationEvents("BonusScreen")
 
     BackHandler(onBack = viewModel::onBack)
     BonusScreenUi(

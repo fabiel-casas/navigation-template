@@ -30,7 +30,7 @@ fun BonusGroupScreen(
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
-    viewModel.collectNavigationEvents()
+    viewModel.collectNavigationEvents("BonusGroupScreen")
 
     BackHandler(onBack = viewModel::onBack)
     BonusGroupScreenUi(

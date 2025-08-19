@@ -38,7 +38,7 @@ fun HomeScreen(
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
-    viewModel.collectNavigationEvents()
+    viewModel.collectNavigationEvents("HomeScreen")
 
 
     BackHandler(onBack = viewModel::onBack)

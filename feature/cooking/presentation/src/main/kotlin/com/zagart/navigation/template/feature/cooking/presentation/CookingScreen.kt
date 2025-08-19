@@ -19,7 +19,7 @@ fun CookingScreen(
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
-    viewModel.collectNavigationEvents()
+    viewModel.collectNavigationEvents("CookingScreen")
 
     BackHandler(onBack = viewModel::onBack)
     DummyScreen(

@@ -65,20 +65,12 @@ class BonusBoxViewModel @Inject constructor() : NavigationViewModel() {
     }
 
     fun onProductClick(product: ProductViewData, backstackIndex: Int) {
-        viewModelScope.launch {
-            val randomTime = (1000L..3000L).random()
-            Log.i(
-                "BonusBoxViewModel",
-                "Simulating delay of $randomTime ms before navigating to ProductsBackstack"
+        sendDestination(
+            ProductDetailsDestination(
+                id = product.id,
+                args = Destination.Args(backstackIndex)
             )
-            delay(randomTime) // Simulate a delay for demonstration purposes
-            sendDestination(
-                ProductDetailsDestination(
-                    id = product.id,
-                    args = Destination.Args(backstackIndex)
-                )
-            )
-        }
+        )
     }
 
     fun onBonusBoxClick(backstackIndex: Int) {

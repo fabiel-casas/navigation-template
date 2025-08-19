@@ -6,6 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,16 +23,25 @@ open class NavigationViewModel : ViewModel() {
 
     @Suppress("MemberVisibilityCanBePrivate")
     protected fun sendDestination(destination: Destination) {
-        viewModelScope.launch { _navigationFlow.emit(destination) }
+        viewModelScope.launch {
+            val randomTime = (1000L..3000L).random()
+            Log.i(
+                "Navigation Event",
+                "Simulating delay of $randomTime ms before navigating to ${destination::class.java.simpleName}"
+            )
+            delay(randomTime)
+            Log.i("Navigation Event", "Sending destination: $destination")
+            _navigationFlow.emit(destination)
+        }
     }
 }
 
 @Composable
-fun NavigationViewModel.collectNavigationEvents() {
+fun NavigationViewModel.collectNavigationEvents(screenName: String) {
     val navigationFlow = LocalNavigation.current
     val newDestination = navigationDestinationFlow.collectAsStateWithLifecycle(initialValue = null)
     LaunchedEffect(newDestination.value) {
-        Log.i("Navigation Event", "New destination: ${newDestination.value}")
+        Log.i("Navigation Event", "Screen: $screenName, New Destination: ${newDestination.value?.javaClass?.simpleName}")
         newDestination.value?.let { destination ->
             navigationFlow.send(destination)
         }

@@ -19,7 +19,7 @@ fun MyListScreen(
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
-    viewModel.collectNavigationEvents()
+    viewModel.collectNavigationEvents("MyListScreen")
 
     BackHandler(onBack = viewModel::onBack)
     DummyScreen(

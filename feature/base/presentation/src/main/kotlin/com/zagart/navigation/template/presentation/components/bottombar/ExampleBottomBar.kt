@@ -19,7 +19,7 @@ fun ExampleBottomBar(
     val currentDestination by LocalNavigation.current
         .destinationFlow
         .collectAsStateWithLifecycle(initialValue = HomeBackstack())
-    viewModel.collectNavigationEvents()
+    viewModel.collectNavigationEvents("ExampleBottomBar")
 
     if (currentDestination.args.bottomBarScope.isApplication()) {
         ExampleBottomBarUi(

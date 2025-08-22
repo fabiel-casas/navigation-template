@@ -1,5 +1,6 @@
 package com.zagart.navigation.template.presentation
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zagart.navigation.template.feature.bonus.domain.BonusGroupRepository
 import com.zagart.navigation.template.feature.bonus.ui.bonusbox.BonusBoxBannerViewData
@@ -13,7 +14,8 @@ import com.zagart.navigation.template.presentation.navigation.BonusBoxDestinatio
 import com.zagart.navigation.template.presentation.navigation.BonusGroupDestination
 import com.zagart.navigation.template.presentation.navigation.Destination
 import com.zagart.navigation.template.presentation.navigation.HomeDestination
-import com.zagart.navigation.template.presentation.navigation.NavigationViewModel
+import com.zagart.navigation.template.presentation.navigation.NavigationEventDelegate
+import com.zagart.navigation.template.presentation.navigation.NavigationEventDelegateImpl
 import com.zagart.navigation.template.presentation.navigation.ProductDetailsDestination
 import com.zagart.navigation.template.presentation.navigation.isScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +26,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : NavigationViewModel() {
+class HomeViewModel @Inject constructor() : ViewModel(),
+    NavigationEventDelegate by NavigationEventDelegateImpl()  {
 
     private val _state = MutableStateFlow(HomeScreenState())
     val state = _state.asStateFlow()

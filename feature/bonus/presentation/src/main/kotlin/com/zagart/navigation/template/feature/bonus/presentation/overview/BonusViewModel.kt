@@ -1,6 +1,6 @@
 package com.zagart.navigation.template.feature.bonus.presentation.overview
 
-import android.util.Log
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zagart.navigation.template.feature.bonus.domain.BonusGroupRepository
 import com.zagart.navigation.template.feature.bonus.ui.bonusbox.AdvertisementViewData
@@ -9,20 +9,15 @@ import com.zagart.navigation.template.feature.bonus.ui.components.models.BonusGr
 import com.zagart.navigation.template.feature.bonus.ui.components.models.BonusItem
 import com.zagart.navigation.template.feature.bonus.ui.components.models.BonusLane
 import com.zagart.navigation.template.feature.bonus.ui.overview.BonusScreenState
-import com.zagart.navigation.template.feature.product.domain.ProductDomainData
 import com.zagart.navigation.template.feature.product.domain.ProductRepository
 import com.zagart.navigation.template.feature.product.ui.components.ProductViewData
-import com.zagart.navigation.template.presentation.navigation.BonusBackstack
 import com.zagart.navigation.template.presentation.navigation.BonusBoxDestination
 import com.zagart.navigation.template.presentation.navigation.BonusGroupDestination
-import com.zagart.navigation.template.presentation.navigation.CookingBackstack
 import com.zagart.navigation.template.presentation.navigation.Destination
-import com.zagart.navigation.template.presentation.navigation.HomeBackstack
-import com.zagart.navigation.template.presentation.navigation.NavigationViewModel
+import com.zagart.navigation.template.presentation.navigation.NavigationEventDelegate
+import com.zagart.navigation.template.presentation.navigation.NavigationEventDelegateImpl
 import com.zagart.navigation.template.presentation.navigation.ProductDetailsDestination
-import com.zagart.navigation.template.presentation.navigation.ProductsBackstack
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -30,7 +25,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BonusViewModel @Inject constructor() : NavigationViewModel() {
+class BonusViewModel @Inject constructor() : ViewModel(),
+    NavigationEventDelegate by NavigationEventDelegateImpl() {
 
     private val _state = MutableStateFlow(BonusScreenState())
     val state = _state.asStateFlow()

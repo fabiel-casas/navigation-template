@@ -12,6 +12,7 @@ import com.zagart.navigation.template.feature.home.ui.HomeScreenActions
 import com.zagart.navigation.template.feature.home.ui.HomeScreenUi
 import com.zagart.navigation.template.presentation.navigation.HomeDestination
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
+import com.zagart.navigation.template.presentation.navigation.onBack
 import com.zagart.navigation.template.ui.Tab
 
 @Composable

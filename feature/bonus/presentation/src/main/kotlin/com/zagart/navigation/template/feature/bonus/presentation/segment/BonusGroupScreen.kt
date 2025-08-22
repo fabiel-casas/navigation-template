@@ -12,6 +12,7 @@ import com.zagart.navigation.template.feature.bonus.ui.segment.BonusGroupActions
 import com.zagart.navigation.template.feature.bonus.ui.segment.BonusGroupScreenUi
 import com.zagart.navigation.template.presentation.navigation.BonusGroupDestination
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
+import com.zagart.navigation.template.presentation.navigation.onBack
 
 @Composable
 fun BonusGroupScreen(

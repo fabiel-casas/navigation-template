@@ -1,5 +1,6 @@
 package com.zagart.navigation.template.feature.bonus.presentation.segment
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zagart.navigation.template.feature.bonus.domain.BonusGroupRepository
 import com.zagart.navigation.template.feature.bonus.ui.components.models.BonusGroupViewData
@@ -7,7 +8,8 @@ import com.zagart.navigation.template.feature.bonus.ui.segment.BonusGroupScreenS
 import com.zagart.navigation.template.feature.product.ui.components.ProductViewData
 import com.zagart.navigation.template.presentation.navigation.BonusGroupDestination
 import com.zagart.navigation.template.presentation.navigation.Destination
-import com.zagart.navigation.template.presentation.navigation.NavigationViewModel
+import com.zagart.navigation.template.presentation.navigation.NavigationEventDelegate
+import com.zagart.navigation.template.presentation.navigation.NavigationEventDelegateImpl
 import com.zagart.navigation.template.presentation.navigation.ProductDetailsDestination
 import com.zagart.navigation.template.presentation.navigation.isScreen
 import com.zagart.navigation.template.ui.Tab
@@ -19,7 +21,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BonusGroupViewModel @Inject constructor() : NavigationViewModel() {
+class BonusGroupViewModel @Inject constructor() : ViewModel(),
+    NavigationEventDelegate by NavigationEventDelegateImpl()  {
 
     private val _state = MutableStateFlow(BonusGroupScreenState())
     val state = _state.asStateFlow()

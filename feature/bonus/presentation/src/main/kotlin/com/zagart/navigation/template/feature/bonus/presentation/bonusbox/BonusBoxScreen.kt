@@ -14,6 +14,7 @@ import com.zagart.navigation.template.feature.bonus.ui.components.BonusLanesActi
 import com.zagart.navigation.template.presentation.navigation.BonusBoxDestination
 import com.zagart.navigation.template.presentation.navigation.ScrollStateHolder
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
+import com.zagart.navigation.template.presentation.navigation.onBack
 
 @Composable
 fun BonusBoxScreen(

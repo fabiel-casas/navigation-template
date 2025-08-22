@@ -15,7 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.zagart.navigation.template.presentation.navigation.Destination
-import com.zagart.navigation.template.presentation.navigation.NavigationViewModel
+import com.zagart.navigation.template.presentation.navigation.NavigationEventDelegateImpl
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlin.reflect.KType
@@ -26,7 +26,7 @@ val defaultTypeMap = mapOf(
 )
 
 /**
- * Wrapper around [composable]. It keeps [NavigationViewModel.currentDestinationState] updated, so
+ * Wrapper around [composable]. It keeps [NavigationEventDelegateImpl.currentDestinationState] updated, so
  * it always should be used instead of [composable].
  * In addition, provides [NavBackStackEntry] to [Destination] conversion.
  */

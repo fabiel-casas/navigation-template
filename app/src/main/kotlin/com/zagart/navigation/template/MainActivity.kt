@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -32,7 +34,6 @@ import com.zagart.navigation.template.presentation.navigation.Backstack
 import com.zagart.navigation.template.presentation.navigation.BonusBackstack
 import com.zagart.navigation.template.presentation.navigation.CookingBackstack
 import com.zagart.navigation.template.presentation.navigation.Destination
-import com.zagart.navigation.template.presentation.navigation.NavigationFlow
 import com.zagart.navigation.template.presentation.navigation.HomeBackstack
 import com.zagart.navigation.template.presentation.navigation.LocalNavigation
 import com.zagart.navigation.template.presentation.navigation.MyListBackstack
@@ -92,14 +93,15 @@ class MainActivity : ComponentActivity() {
                         delay(50)
                     }
                 }
-
                 currentController.open(destination)
             }
         }
-
-        Column {
-            ExampleTopBar()
-            Surface(modifier = Modifier.weight(1f)) {
+        Scaffold(
+            modifier = Modifier.safeDrawingPadding(),
+            topBar = { ExampleTopBar() },
+            bottomBar = { ExampleBottomBar() },
+        ) { paddingValues ->
+            Surface(modifier = Modifier.padding(paddingValues)) {
                 when (currentBackstack) {
                     is HomeBackstack -> HomeNavHost(
                         currentController,
@@ -114,7 +116,6 @@ class MainActivity : ComponentActivity() {
                     is MyListBackstack -> MyListNavHost(currentController)
                 }
             }
-            ExampleBottomBar()
         }
     }
 

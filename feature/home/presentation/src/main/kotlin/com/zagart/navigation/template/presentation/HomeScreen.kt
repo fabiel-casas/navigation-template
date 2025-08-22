@@ -10,14 +10,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zagart.navigation.template.feature.home.ui.HomeScreenActions
 import com.zagart.navigation.template.feature.home.ui.HomeScreenUi
-import com.zagart.navigation.template.presentation.navigation.HomeDestination
+import com.zagart.navigation.template.presentation.navigation.BannerDestination
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
 import com.zagart.navigation.template.presentation.navigation.onBack
 import com.zagart.navigation.template.ui.Tab
 
 @Composable
 fun HomeScreen(
-    destination: HomeDestination,
+    destination: BannerDestination,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {

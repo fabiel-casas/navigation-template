@@ -13,16 +13,18 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ExampleBottomBarViewModel @Inject constructor() : ViewModel(),
+class NavigationViewModel @Inject constructor() : ViewModel(),
     NavigationEventDelegate by NavigationEventDelegateImpl() {
+
+    val currentDestination = navigationDestinationFlow.value
 
     fun onBottomBarItemClick(index: Int) {
         when (index) {
-            Tab.HOME.ordinal -> sendDestination(HomeBackstack())
-            Tab.BONUS.ordinal -> sendDestination(BonusBackstack())
-            Tab.COOKING.ordinal -> sendDestination(CookingBackstack())
-            Tab.PRODUCTS.ordinal -> sendDestination(ProductsBackstack())
-            Tab.MY_LIST.ordinal -> sendDestination(MyListBackstack())
+            Tab.HOME.ordinal -> sendDestination(HomeBackstack)
+            Tab.BONUS.ordinal -> sendDestination(BonusBackstack)
+            Tab.COOKING.ordinal -> sendDestination(CookingBackstack)
+            Tab.PRODUCTS.ordinal -> sendDestination(ProductsBackstack)
+            Tab.MY_LIST.ordinal -> sendDestination(MyListBackstack)
         }
     }
 }

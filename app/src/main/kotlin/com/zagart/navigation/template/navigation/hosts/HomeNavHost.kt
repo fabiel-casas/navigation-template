@@ -12,7 +12,7 @@ import com.zagart.navigation.template.navigation.screen
 import com.zagart.navigation.template.presentation.HomeScreen
 import com.zagart.navigation.template.presentation.navigation.BonusBoxDestination
 import com.zagart.navigation.template.presentation.navigation.BonusGroupDestination
-import com.zagart.navigation.template.presentation.navigation.HomeDestination
+import com.zagart.navigation.template.presentation.navigation.BannerDestination
 import com.zagart.navigation.template.presentation.navigation.ProductDetailsDestination
 import com.zagart.navigation.template.presentation.navigation.ScrollStateHolder
 import com.zagart.navigation.template.product.presentation.details.ProductDetailsScreen
@@ -24,7 +24,7 @@ fun HomeNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = HomeDestination::class,
+        startDestination = BannerDestination::class,
         typeMap = defaultTypeMap,
         enterTransition = {
             slideInHorizontally(initialOffsetX = { -it })
@@ -33,7 +33,7 @@ fun HomeNavHost(
             slideOutHorizontally(targetOffsetX = { -it })
         },
     ) {
-        screen<HomeDestination> { HomeScreen(it) }
+        screen<BannerDestination> { HomeScreen(it) }
         screen<BonusBoxDestination> { BonusBoxScreen(it, scrollStateHolder) }
         screen<BonusGroupDestination> { BonusGroupScreen(it) }
         screen<ProductDetailsDestination> { ProductDetailsScreen(it) }

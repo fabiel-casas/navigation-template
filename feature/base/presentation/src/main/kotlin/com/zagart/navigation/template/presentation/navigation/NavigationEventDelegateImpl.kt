@@ -6,7 +6,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -58,7 +57,7 @@ interface NavigationEventDelegate {
 
 fun ViewModel.onBack() {
     if (this is NavigationEventDelegate) {
-        sendDestination(BackDestination())
+        sendDestination(BackDestination)
     } else {
         Log.e("Navigation", "ViewModel must implement NavigationEventDelegate to handle back navigation")
     }

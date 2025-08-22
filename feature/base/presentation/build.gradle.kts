@@ -11,7 +11,12 @@ module(
             bonus.ui,
             product.ui,
         )
-    }
+    },
+    dependencies = Dependencies(
+        libs.androidx.navigation3.ui,
+        libs.androidx.navigation3.runtime,
+        libs.androidx.lifecycle.viewmodel.navigation3,
+    )
 )
 
 android {

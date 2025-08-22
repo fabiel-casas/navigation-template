@@ -12,12 +12,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.zagart.navigation.template.navigation.deeplinks.DeeplinkConverter
@@ -28,9 +25,9 @@ import com.zagart.navigation.template.navigation.hosts.MyListNavHost
 import com.zagart.navigation.template.navigation.hosts.ProductsNavHost
 import com.zagart.navigation.template.navigation.rememberNavControllerManager
 import com.zagart.navigation.template.presentation.components.bottombar.ExampleBottomBar
-import com.zagart.navigation.template.presentation.components.topbar.ExampleTopBar
+import com.zagart.navigation.template.presentation.components.bottombar.NavigationViewModel
 import com.zagart.navigation.template.presentation.navigation.BackDestination
-import com.zagart.navigation.template.presentation.navigation.Backstack
+import com.zagart.navigation.template.presentation.navigation.BottomBanner
 import com.zagart.navigation.template.presentation.navigation.BonusBackstack
 import com.zagart.navigation.template.presentation.navigation.CookingBackstack
 import com.zagart.navigation.template.presentation.navigation.Destination
@@ -65,44 +62,45 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun NavTemplate() {
+    private fun NavTemplate(
+        viewModel: NavigationViewModel = hiltViewModel(),
+    ) {
         val scrollStateHolder = remember { ScrollStateHolder() }
         val navControllerManager = rememberNavControllerManager()
 
-        var currentBackstack: Backstack by rememberSaveable {
-            mutableStateOf(HomeBackstack())
-        }
-        val destination = LocalNavigation.current
-            .destinationFlow
-            .collectAsStateWithLifecycle(currentBackstack)
-            .value
+        val currentDestination = LocalNavigation.current.destinationFlow.collectAsStateWithLifecycle(
+            initialValue = HomeBackstack
+        ).value
 
-        var currentController = navControllerManager.getController(currentBackstack)
-
-        LaunchedEffect(destination) {
-            if (destination is Backstack) {
-                currentBackstack = destination
-            } else {
-                if (destination.args.backstackIndex >= 0) {
-                    currentBackstack = Backstack.from(destination.args.backstackIndex)
-                    currentController =
-                        navControllerManager.getController(currentBackstack)
-
-                    if (currentController.currentBackStackEntry == null) {
-                        // [Workaround] Giving some time to NavHost to initialize first destination
-                        delay(50)
-                    }
-                }
-                currentController.open(destination)
-            }
-        }
+//        var currentController = navControllerManager.getController(currentDestination)
+//
+//        LaunchedEffect(currentDestination) {
+//            if (currentDestination is BottomBanner) {
+//                currentBottomBanner = currentDestination
+//            } else {
+//                if (currentDestination.args.backstackIndex >= 0) {
+//                    currentBottomBanner = BottomBanner.from(currentDestination.args.backstackIndex)
+//                    currentController =
+//                        navControllerManager.getController(currentBottomBanner)
+//
+//                    if (currentController.currentBackStackEntry == null) {
+//                        // [Workaround] Giving some time to NavHost to initialize first destination
+//                        delay(50)
+//                    }
+//                }
+//                currentController.open(currentDestination)
+//            }
+//        }
         Scaffold(
             modifier = Modifier.safeDrawingPadding(),
-            topBar = { ExampleTopBar() },
-            bottomBar = { ExampleBottomBar() },
+            bottomBar = { ExampleBottomBar(
+                modifier = Modifier,
+                currentDestination = currentDestination,
+                onBottomBarItemClick = viewModel::onBottomBarItemClick
+            ) },
         ) { paddingValues ->
             Surface(modifier = Modifier.padding(paddingValues)) {
-                when (currentBackstack) {
+                when (currentDestination) {
                     is HomeBackstack -> HomeNavHost(
                         currentController,
                         scrollStateHolder

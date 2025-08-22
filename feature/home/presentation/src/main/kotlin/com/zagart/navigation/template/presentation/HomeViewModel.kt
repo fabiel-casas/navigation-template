@@ -13,7 +13,7 @@ import com.zagart.navigation.template.feature.product.ui.components.ProductViewD
 import com.zagart.navigation.template.presentation.navigation.BonusBoxDestination
 import com.zagart.navigation.template.presentation.navigation.BonusGroupDestination
 import com.zagart.navigation.template.presentation.navigation.Destination
-import com.zagart.navigation.template.presentation.navigation.HomeDestination
+import com.zagart.navigation.template.presentation.navigation.BannerDestination
 import com.zagart.navigation.template.presentation.navigation.NavigationEventDelegate
 import com.zagart.navigation.template.presentation.navigation.NavigationEventDelegateImpl
 import com.zagart.navigation.template.presentation.navigation.ProductDetailsDestination
@@ -32,7 +32,7 @@ class HomeViewModel @Inject constructor() : ViewModel(),
     private val _state = MutableStateFlow(HomeScreenState())
     val state = _state.asStateFlow()
 
-    fun load(destination: HomeDestination) {
+    fun load(destination: BannerDestination) {
         viewModelScope.launch {
             val products = ProductRepository.getProducts().map {
                 ProductViewData(it.id, it.title)

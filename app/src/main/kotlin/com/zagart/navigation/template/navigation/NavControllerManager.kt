@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.zagart.navigation.template.presentation.navigation.Backstack
+import com.zagart.navigation.template.presentation.navigation.BottomBanner
 import com.zagart.navigation.template.presentation.navigation.BonusBackstack
 import com.zagart.navigation.template.presentation.navigation.CookingBackstack
 import com.zagart.navigation.template.presentation.navigation.HomeBackstack
@@ -38,14 +38,14 @@ class NavControllerManager(
     private val myListNavController: NavHostController,
 ) {
 
-    fun getController(backstack: Backstack): NavHostController {
-        return when (backstack) {
+    fun getController(bottomBanner: BottomBanner): NavHostController {
+        return when (bottomBanner) {
             is HomeBackstack -> homeNavController
             is BonusBackstack -> bonusNavController
             is CookingBackstack -> cookingNavController
             is ProductsBackstack -> productsNavController
             is MyListBackstack -> myListNavController
-            else -> throw IllegalArgumentException("Unsupported backstack type: ${backstack::class.simpleName}")
+            else -> throw IllegalArgumentException("Unsupported backstack type: ${bottomBanner::class.simpleName}")
         }
     }
 }

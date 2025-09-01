@@ -2,19 +2,24 @@ package com.zagart.navigation.template.presentation.navigation
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 @Parcelize
-data object BackDestination : BannerDestination(), Parcelable
+@Serializable
+data object BackDestination : NavBarDestination, Parcelable
 
 @Parcelize
-data object BonusBoxDestination : BannerDestination(), Parcelable
+@Serializable
+data object BonusBoxDestination : PanelDestination(false), Parcelable
 
 @Parcelize
+@Serializable
 data class BonusGroupDestination(
     val id: String,
-): BannerDestination(), Parcelable
+): PanelDestination(true), Parcelable
 
 @Parcelize
+@Serializable
 data class ProductDetailsDestination(
     val id: String,
-): FullScreenDestination(), Parcelable
+): PanelDestination(true), Parcelable

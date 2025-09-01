@@ -11,28 +11,26 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zagart.navigation.template.feature.bonus.ui.components.BonusLanesActions
 import com.zagart.navigation.template.feature.bonus.ui.overview.BonusScreenActions
 import com.zagart.navigation.template.feature.bonus.ui.overview.BonusScreenUi
-import com.zagart.navigation.template.presentation.navigation.BonusDestination
+import com.zagart.navigation.template.presentation.navigation.BonusNavBarDestination
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
 import com.zagart.navigation.template.presentation.navigation.onBack
 import com.zagart.navigation.template.ui.Tab
 
 @Composable
 fun BonusScreen(
-    destination: BonusDestination,
+    destination: BonusNavBarDestination,
     modifier: Modifier = Modifier,
     viewModel: BonusViewModel = hiltViewModel(),
 ) {
-    val backstackIndex = Tab.BONUS.ordinal
     val state by viewModel.state.collectAsStateWithLifecycle()
     val actions = remember(viewModel) {
         BonusScreenActions(
             bonusLanesActions = BonusLanesActions(
-                onBonusBoxBannerClick = { viewModel.onBonusBoxClick(backstackIndex) },
-                onProductClick = { viewData -> viewModel.onProductClick(viewData, backstackIndex) },
+                onBonusBoxBannerClick = { viewModel.onBonusBoxClick() },
+                onProductClick = { viewData -> viewModel.onProductClick(viewData) },
                 onBonusGroupClick = { viewData ->
                     viewModel.onBonusGroupClick(
-                        viewData,
-                        backstackIndex
+                        viewData
                     )
                 }
             ),

@@ -55,28 +55,24 @@ class BonusViewModel @Inject constructor() : ViewModel(),
         }
     }
 
-    fun onBonusBoxClick(backstackIndex: Int) {
+    fun onBonusBoxClick() {
         sendDestination(
-            BonusBoxDestination(
-                args = Destination.Args(backstackIndex)
-            )
+            BonusBoxDestination
         )
     }
 
-    fun onBonusGroupClick(bonusGroup: BonusGroupViewData, backstackIndex: Int) {
+    fun onBonusGroupClick(bonusGroup: BonusGroupViewData) {
         sendDestination(
             BonusGroupDestination(
                 id = bonusGroup.id,
-                args = Destination.Args(backstackIndex)
             )
         )
     }
 
-    fun onProductClick(product: ProductViewData, backstackIndex: Int) {
+    fun onProductClick(product: ProductViewData) {
         sendDestination(
             ProductDetailsDestination(
                 id = product.id,
-                args = Destination.Args(backstackIndex)
             )
         )
     }

@@ -10,6 +10,7 @@ class AppModuleGradlePlugin : Plugin<Project> {
             setupHilt()
             setupCompose()
             setupRoom()
+            setupNavigation3()
             dependencies {
                 implementation(library("serialization-json"))
                 modules(

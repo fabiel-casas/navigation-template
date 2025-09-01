@@ -7,12 +7,9 @@ import com.zagart.navigation.template.feature.bonus.ui.components.models.BonusGr
 import com.zagart.navigation.template.feature.bonus.ui.segment.BonusGroupScreenState
 import com.zagart.navigation.template.feature.product.ui.components.ProductViewData
 import com.zagart.navigation.template.presentation.navigation.BonusGroupDestination
-import com.zagart.navigation.template.presentation.navigation.Destination
 import com.zagart.navigation.template.presentation.navigation.NavigationEventDelegate
 import com.zagart.navigation.template.presentation.navigation.NavigationEventDelegateImpl
 import com.zagart.navigation.template.presentation.navigation.ProductDetailsDestination
-import com.zagart.navigation.template.presentation.navigation.isScreen
-import com.zagart.navigation.template.ui.Tab
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,11 +29,8 @@ class BonusGroupViewModel @Inject constructor() : ViewModel(),
             val bonusGroup = BonusGroupRepository.getBonusGroupById(destination.id)
             _state.update { currentState ->
                 currentState.copy(
-                    currentTab = Tab.entries[destination.args.backstackIndex],
                     bonusGroup = BonusGroupViewData(bonusGroup.id, bonusGroup.title),
                     products = bonusGroup.products.map { ProductViewData(it.id, it.title) },
-                    showTopBar = destination.args.topBarScope.isScreen(),
-                    showBottomBar = destination.args.bottomBarScope.isScreen(),
                 )
             }
         }
@@ -46,7 +40,7 @@ class BonusGroupViewModel @Inject constructor() : ViewModel(),
         sendDestination(
             ProductDetailsDestination(
                 id = product.id,
-                args = navigationDestinationFlow.value?.args ?: Destination.Args()
+//                args = navigationDestinationFlow.value?.args ?: Destination.Args()
             )
         )
     }

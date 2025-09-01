@@ -3,29 +3,35 @@ package com.zagart.navigation.template.presentation.navigation
 import android.os.Parcelable
 import com.zagart.navigation.template.ui.Tab
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 @Parcelize
-data object BonusBackstack : BannerDestination(), Parcelable
+@Serializable
+data object BonusNavBarDestination : NavBarDestination, Parcelable
 
 @Parcelize
-data object CookingBackstack : BannerDestination(), Parcelable
+@Serializable
+data object CookingNavBarDestination : NavBarDestination, Parcelable
 
 @Parcelize
-data object HomeBackstack : BannerDestination(), Parcelable
+@Serializable
+data object HomeNavBarDestination : NavBarDestination, Parcelable
 
 @Parcelize
-data object MyListBackstack : BannerDestination(), Parcelable
+@Serializable
+data object MyListNavBarDestination : NavBarDestination, Parcelable
 
 @Parcelize
-data object ProductsBackstack : BannerDestination(), Parcelable
+@Serializable
+data object ProductsNavBarDestination : NavBarDestination, Parcelable
 
-fun BannerDestination.from(tabIndex: Int): BannerDestination {
+fun NavBarDestination.from(tabIndex: Int): NavBarDestination {
     return when (tabIndex) {
-        Tab.HOME.ordinal -> HomeBackstack
-        Tab.BONUS.ordinal -> BonusBackstack
-        Tab.COOKING.ordinal -> CookingBackstack
-        Tab.PRODUCTS.ordinal -> ProductsBackstack
-        Tab.MY_LIST.ordinal -> MyListBackstack
+        Tab.HOME.ordinal -> HomeNavBarDestination
+        Tab.BONUS.ordinal -> BonusNavBarDestination
+        Tab.COOKING.ordinal -> CookingNavBarDestination
+        Tab.PRODUCTS.ordinal -> ProductsNavBarDestination
+        Tab.MY_LIST.ordinal -> MyListNavBarDestination
         else -> throw IllegalArgumentException("Backstack with index $tabIndex does not exist")
     }
 }

@@ -5,7 +5,6 @@ import com.zagart.navigation.template.feature.product.ui.components.ProductViewD
 import com.zagart.navigation.template.ui.Tab
 
 data class BonusGroupScreenState(
-    val currentTab: Tab = Tab.BONUS,
     val bonusGroup: BonusGroupViewData = BonusGroupViewData(),
     val products: List<ProductViewData> = listOf(),
     val showTopBar: Boolean = true,

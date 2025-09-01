@@ -19,12 +19,10 @@ fun ProductDetailsScreenUi(
     ExampleScaffold(
         modifier = modifier,
         topBar = {
-            if (state.showTopBar) {
                 ExampleTopBarUi(
                     title = state.title,
                     onBack = actions.onBack
                 )
-            }
         },
         content = { padding ->
             Column(modifier = Modifier.padding(padding)) {

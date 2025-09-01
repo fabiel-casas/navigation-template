@@ -5,15 +5,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.zagart.navigation.template.presentation.navigation.MyListDestination
+import com.zagart.navigation.template.presentation.navigation.MyListNavBarDestination
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
 import com.zagart.navigation.template.presentation.navigation.onBack
-import com.zagart.navigation.template.ui.Tab
 import com.zagart.navigation.template.ui.DummyScreen
 
 @Composable
 fun MyListScreen(
-    destination: MyListDestination,
+    destination: MyListNavBarDestination,
     modifier: Modifier = Modifier,
     viewModel: MyListViewModel = hiltViewModel(),
 ) {

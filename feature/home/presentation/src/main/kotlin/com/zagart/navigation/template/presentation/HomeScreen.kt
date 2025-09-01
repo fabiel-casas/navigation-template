@@ -10,27 +10,25 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zagart.navigation.template.feature.home.ui.HomeScreenActions
 import com.zagart.navigation.template.feature.home.ui.HomeScreenUi
-import com.zagart.navigation.template.presentation.navigation.BannerDestination
+import com.zagart.navigation.template.presentation.navigation.NavBarDestination
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
 import com.zagart.navigation.template.presentation.navigation.onBack
 import com.zagart.navigation.template.ui.Tab
 
 @Composable
 fun HomeScreen(
-    destination: BannerDestination,
+    destination: NavBarDestination,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
-    val backstackIndex = destination.args.backstackIndex
     val state by viewModel.state.collectAsStateWithLifecycle()
     val actions = remember(viewModel) {
         HomeScreenActions(
-            onBonusBoxBannerClick = { viewModel.onBonusBoxClick(Tab.BONUS.ordinal) },
-            onProductClick = { viewData -> viewModel.onProductClick(viewData, backstackIndex) },
+            onBonusBoxBannerClick = { viewModel.onBonusBoxClick() },
+            onProductClick = { viewData -> viewModel.onProductClick(viewData,) },
             onBonusGroupClick = { viewData ->
                 viewModel.onBonusGroupClick(
-                    viewData,
-                    backstackIndex
+                    viewData
                 )
             }
         )

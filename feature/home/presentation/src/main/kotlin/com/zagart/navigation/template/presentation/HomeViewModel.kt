@@ -12,12 +12,10 @@ import com.zagart.navigation.template.feature.product.domain.ProductRepository
 import com.zagart.navigation.template.feature.product.ui.components.ProductViewData
 import com.zagart.navigation.template.presentation.navigation.BonusBoxDestination
 import com.zagart.navigation.template.presentation.navigation.BonusGroupDestination
-import com.zagart.navigation.template.presentation.navigation.Destination
-import com.zagart.navigation.template.presentation.navigation.BannerDestination
+import com.zagart.navigation.template.presentation.navigation.NavBarDestination
 import com.zagart.navigation.template.presentation.navigation.NavigationEventDelegate
 import com.zagart.navigation.template.presentation.navigation.NavigationEventDelegateImpl
 import com.zagart.navigation.template.presentation.navigation.ProductDetailsDestination
-import com.zagart.navigation.template.presentation.navigation.isScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,7 +30,7 @@ class HomeViewModel @Inject constructor() : ViewModel(),
     private val _state = MutableStateFlow(HomeScreenState())
     val state = _state.asStateFlow()
 
-    fun load(destination: BannerDestination) {
+    fun load(destination: NavBarDestination) {
         viewModelScope.launch {
             val products = ProductRepository.getProducts().map {
                 ProductViewData(it.id, it.title)
@@ -43,8 +41,6 @@ class HomeViewModel @Inject constructor() : ViewModel(),
 
             _state.update { currentState ->
                 currentState.copy(
-                    showTopBar = destination.args.topBarScope.isScreen(),
-                    showBottomBar = destination.args.topBarScope.isScreen(),
                     lanes = arrayListOf(
                         HomeLane.HorizontalList(products.map { HomeItem.Product(it) }),
                         HomeLane.BonusBoxBanner(BonusBoxBannerViewData("Bonus Box")),
@@ -57,32 +53,24 @@ class HomeViewModel @Inject constructor() : ViewModel(),
         }
     }
 
-    fun onBonusGroupClick(bonusGroup: BonusGroupViewData, backstackIndex: Int) {
+    fun onBonusGroupClick(bonusGroup: BonusGroupViewData) {
         sendDestination(
             BonusGroupDestination(
                 id = bonusGroup.id,
-                args = Destination.Args(
-                    backstackIndex = backstackIndex,
-                    topBarScope = Destination.ComponentScope.Application,
-                    bottomBarScope = Destination.ComponentScope.Application,
-                )
             )
         )
     }
 
-     fun onBonusBoxClick(backstackIndex: Int) {
+     fun onBonusBoxClick() {
         sendDestination(
-            BonusBoxDestination(
-                args = Destination.Args(backstackIndex)
-            )
+            BonusBoxDestination
         )
     }
 
-    fun onProductClick(product: ProductViewData, backstackIndex: Int) {
+    fun onProductClick(product: ProductViewData) {
         sendDestination(
             ProductDetailsDestination(
                 id = product.id,
-                args = Destination.Args(backstackIndex)
             )
         )
     }

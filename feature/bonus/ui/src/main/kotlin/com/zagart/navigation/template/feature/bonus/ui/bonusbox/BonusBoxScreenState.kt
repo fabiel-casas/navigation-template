@@ -6,9 +6,6 @@ import com.zagart.navigation.template.ui.Tab
 
 @Immutable
 data class BonusBoxScreenState(
-    val currentTab: Tab = Tab.BONUS,
     val lanes: List<BonusLane> = emptyList(),
-    val showTopBar: Boolean = true,
-    val showBottomBar: Boolean = true,
     val title: String = "Bonus Box",
 )

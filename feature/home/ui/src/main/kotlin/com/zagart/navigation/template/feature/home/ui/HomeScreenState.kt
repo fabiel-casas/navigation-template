@@ -8,8 +8,6 @@ import com.zagart.navigation.template.feature.product.ui.components.ProductViewD
 @Immutable
 data class HomeScreenState(
     val lanes: List<HomeLane> = emptyList(),
-    val showTopBar: Boolean = true,
-    val showBottomBar: Boolean = true,
 )
 
 @Immutable

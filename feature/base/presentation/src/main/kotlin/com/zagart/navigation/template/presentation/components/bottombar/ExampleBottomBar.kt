@@ -9,13 +9,14 @@ import com.zagart.navigation.template.ui.ExampleBottomBarUi
 fun ExampleBottomBar(
     modifier: Modifier = Modifier,
     currentDestination: Destination,
+    selectedIndex: Int = 0,
     onBottomBarItemClick: (index: Int) -> Unit = {},
 ) {
 
     if (!currentDestination.isFullScreen) {
         ExampleBottomBarUi(
             modifier = modifier,
-            selectedItemIndex = currentDestination.args.backstackIndex,
+            selectedItemIndex = selectedIndex,
             onItemClicked = onBottomBarItemClick
         )
     }

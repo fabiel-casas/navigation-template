@@ -14,14 +14,21 @@ sealed interface Destination : Parcelable {
     val deepLinks: List<String>
 }
 
-sealed class BannerDestination(
-    override val isFullScreen: Boolean = false,
-    override val args: Args = Args(),
-    override val deepLinks: List<String> = emptyList(),
-) : Destination
+@Parcelize
+@Serializable
+sealed interface NavBarDestination : Destination {
+    override val isFullScreen: Boolean
+        get() = false
+    override val args: Args
+        get() = Args()
+    override val deepLinks: List<String>
+        get() = emptyList()
+}
 
-sealed class FullScreenDestination(
-    override val isFullScreen: Boolean = true,
+@Parcelize
+@Serializable
+sealed class PanelDestination(
+    override val isFullScreen: Boolean,
     override val args: Args = Args(),
     override val deepLinks: List<String> = emptyList(),
 ) : Destination

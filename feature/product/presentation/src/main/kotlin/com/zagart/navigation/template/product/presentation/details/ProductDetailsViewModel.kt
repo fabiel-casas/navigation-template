@@ -8,7 +8,6 @@ import com.zagart.navigation.template.feature.product.ui.details.ProductDetailsS
 import com.zagart.navigation.template.presentation.navigation.NavigationEventDelegate
 import com.zagart.navigation.template.presentation.navigation.NavigationEventDelegateImpl
 import com.zagart.navigation.template.presentation.navigation.ProductDetailsDestination
-import com.zagart.navigation.template.presentation.navigation.isScreen
 import com.zagart.navigation.template.ui.Tab
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,11 +31,8 @@ class ProductDetailsViewModel @Inject constructor() : ViewModel(),
 
             _state.update { currentState ->
                 currentState.copy(
-                    currentTab = Tab.entries[destination.args.backstackIndex],
                     product = product,
                     title = "Product details",
-                    showTopBar = destination.args.topBarScope.isScreen(),
-                    showBottomBar = destination.args.bottomBarScope.isScreen(),
                 )
             }
         }

@@ -26,9 +26,7 @@ fun HomeScreenUi(
     ExampleScaffold(
         modifier = modifier,
         topBar = {
-            if (state.showTopBar) {
-                ExampleTopBarUi("Home")
-            }
+            ExampleTopBarUi("Home")
         },
         content = { padding ->
             LazyColumn(

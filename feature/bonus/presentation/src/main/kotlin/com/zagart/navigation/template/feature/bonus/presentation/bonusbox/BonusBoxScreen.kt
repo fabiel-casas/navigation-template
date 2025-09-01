@@ -12,26 +12,23 @@ import com.zagart.navigation.template.feature.bonus.ui.bonusbox.BonusBoxScreenAc
 import com.zagart.navigation.template.feature.bonus.ui.bonusbox.BonusBoxScreenUi
 import com.zagart.navigation.template.feature.bonus.ui.components.BonusLanesActions
 import com.zagart.navigation.template.presentation.navigation.BonusBoxDestination
-import com.zagart.navigation.template.presentation.navigation.ScrollStateHolder
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
 import com.zagart.navigation.template.presentation.navigation.onBack
 
 @Composable
 fun BonusBoxScreen(
     destination: BonusBoxDestination,
-    scrollStateHolder: ScrollStateHolder,
     modifier: Modifier = Modifier,
     viewModel: BonusBoxViewModel = hiltViewModel(),
 ) {
-    val backstackIndex = destination.args.backstackIndex
     val state by viewModel.state.collectAsStateWithLifecycle()
     val actions = remember(viewModel) {
         BonusBoxScreenActions(
             bonusLanesActions = BonusLanesActions(
                 onAdvertisementClick = {},
-                onBonusBoxBannerClick = { viewModel.onBonusBoxClick(backstackIndex) },
-                onBonusGroupClick = { viewModel.onBonusGroupClick(it, backstackIndex) },
-                onProductClick = { viewModel.onProductClick(it, backstackIndex) }
+                onBonusBoxBannerClick = { viewModel.onBonusBoxClick() },
+                onBonusGroupClick = { viewModel.onBonusGroupClick(it) },
+                onProductClick = { viewModel.onProductClick(it) }
             ),
             onBack = viewModel::onBack,
         )
@@ -45,7 +42,6 @@ fun BonusBoxScreen(
     BackHandler(onBack = viewModel::onBack)
     BonusBoxScreenUi(
         state = state,
-        listState = scrollStateHolder.getListState(destination),
         modifier = modifier,
         actions = actions,
     )

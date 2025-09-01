@@ -5,15 +5,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.zagart.navigation.template.presentation.navigation.CookingDestination
+import com.zagart.navigation.template.presentation.navigation.CookingNavBarDestination
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
 import com.zagart.navigation.template.presentation.navigation.onBack
 import com.zagart.navigation.template.ui.DummyScreen
-import com.zagart.navigation.template.ui.Tab
 
 @Composable
 fun CookingScreen(
-    destination: CookingDestination,
+    destination: CookingNavBarDestination,
     modifier: Modifier = Modifier,
     viewModel: CookingViewModel = hiltViewModel(),
 ) {

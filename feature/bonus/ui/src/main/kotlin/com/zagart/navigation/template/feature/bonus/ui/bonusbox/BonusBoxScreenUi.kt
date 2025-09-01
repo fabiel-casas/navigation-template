@@ -19,12 +19,10 @@ fun BonusBoxScreenUi(
     ExampleScaffold(
         modifier = modifier,
         topBar = {
-            if (state.showTopBar) {
-                ExampleTopBarUi(
-                    title = state.title,
-                    onBack = actions.onBack,
-                )
-            }
+            ExampleTopBarUi(
+                title = state.title,
+                onBack = actions.onBack,
+            )
         },
         content = { padding ->
             BonusLanesContent(

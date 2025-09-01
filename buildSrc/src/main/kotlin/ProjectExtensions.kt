@@ -142,6 +142,15 @@ fun Project.setupCompose() {
     }
 }
 
+fun Project.setupNavigation3() {
+    dependencies {
+        implementation(library("androidx-navigation3-runtime"))
+        implementation(library("androidx-navigation3-ui"))
+        implementation(library("androidx-lifecycle-viewmodel-navigation3"))
+//        implementation(library("androidx-material3-adaptive-navigation3"))
+    }
+}
+
 fun Project.setupApi() {
     dependencies {
         implementation(library("retrofit"))

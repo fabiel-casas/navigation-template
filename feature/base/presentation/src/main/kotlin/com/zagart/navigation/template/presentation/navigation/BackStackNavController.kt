@@ -1,6 +1,5 @@
 package com.zagart.navigation.template.presentation.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
@@ -15,7 +14,6 @@ fun rememberBackStackNavController(initialDestination: Destination): SnapshotSta
         .destinationFlow
     LaunchedEffect(navigationFlow) {
         navigationFlow.collectLatest { newDestination ->
-            Log.i("Navigation", "Received destination: $newDestination")
             when (newDestination) {
                 BackDestination -> backStack.removeLastOrNull()
                 else -> {

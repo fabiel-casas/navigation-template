@@ -26,7 +26,6 @@ class NavigationEventDelegateImpl : NavigationEventDelegate {
                 "Simulating delay of $randomTime ms before navigating to ${destination::class.java.simpleName}"
             )
             delay(randomTime)
-            Log.i("Navigation Event", "Sending destination: $destination")
             _navigationFlow.emit(destination)
         }
     }

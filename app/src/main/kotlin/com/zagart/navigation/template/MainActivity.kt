@@ -10,11 +10,8 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
@@ -39,6 +36,8 @@ import com.zagart.navigation.template.presentation.navigation.MyListNavBarDestin
 import com.zagart.navigation.template.presentation.navigation.NavigationFlowImpl
 import com.zagart.navigation.template.presentation.navigation.ProductDetailsDestination
 import com.zagart.navigation.template.presentation.navigation.ProductsNavBarDestination
+import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
+import com.zagart.navigation.template.presentation.navigation.rememberBackStackNavController
 import com.zagart.navigation.template.product.presentation.details.ProductDetailsScreen
 import com.zagart.navigation.template.product.presentation.overview.ProductsScreen
 import com.zagart.navigation.template.ui.theme.NavigationTemplateTheme
@@ -65,27 +64,22 @@ class MainActivity : ComponentActivity() {
     private fun NavTemplate(
         viewModel: NavigationViewModel = hiltViewModel(),
     ) {
-
-        val currentDestination =
-            LocalNavigation.current.destinationFlow.collectAsStateWithLifecycle(
-                initialValue = HomeNavBarDestination
-            ).value
+        viewModel.collectNavigationEvents("MainActivity")
+        val currentBackStack = rememberBackStackNavController(HomeNavBarDestination)
         Scaffold(
             modifier = Modifier.safeDrawingPadding(),
             bottomBar = {
                 ExampleBottomBar(
                     modifier = Modifier,
-                    currentDestination = currentDestination,
+                    currentDestination = currentBackStack.last(),
                     onBottomBarItemClick = viewModel::onBottomBarItemClick
                 )
             },
         ) { paddingValues ->
-            val backStack = remember { mutableStateListOf<Any>(HomeNavBarDestination) }
-
             NavDisplay(
                 modifier = Modifier.padding(paddingValues),
-                backStack = backStack,
-                onBack = { backStack.removeLastOrNull() },
+                backStack = currentBackStack,
+                onBack = { currentBackStack.removeLastOrNull() },
 
                 // In order to add the `ViewModelStoreNavEntryDecorator` (see comment below for why)
                 // we also need to add the default `NavEntryDecorator`s as well. These provide

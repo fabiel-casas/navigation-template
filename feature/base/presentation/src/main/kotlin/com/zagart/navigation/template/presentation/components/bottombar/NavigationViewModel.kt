@@ -16,8 +16,6 @@ import javax.inject.Inject
 class NavigationViewModel @Inject constructor() : ViewModel(),
     NavigationEventDelegate by NavigationEventDelegateImpl() {
 
-    val currentDestination = navigationDestinationFlow.value
-
     fun onBottomBarItemClick(index: Int) {
         when (index) {
             Tab.HOME.ordinal -> sendDestination(HomeNavBarDestination)

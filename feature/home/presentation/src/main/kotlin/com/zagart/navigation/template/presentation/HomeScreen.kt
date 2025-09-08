@@ -13,7 +13,6 @@ import com.zagart.navigation.template.feature.home.ui.HomeScreenUi
 import com.zagart.navigation.template.presentation.navigation.NavBarDestination
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
 import com.zagart.navigation.template.presentation.navigation.onBack
-import com.zagart.navigation.template.ui.Tab
 
 @Composable
 fun HomeScreen(
@@ -22,6 +21,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    viewModel.collectNavigationEvents("HomeScreen")
     val actions = remember(viewModel) {
         HomeScreenActions(
             onBonusBoxBannerClick = { viewModel.onBonusBoxClick() },
@@ -37,7 +37,6 @@ fun HomeScreen(
     LaunchedEffect(destination) {
         viewModel.load(destination)
     }
-    viewModel.collectNavigationEvents("HomeScreen")
 
 
     BackHandler(onBack = viewModel::onBack)

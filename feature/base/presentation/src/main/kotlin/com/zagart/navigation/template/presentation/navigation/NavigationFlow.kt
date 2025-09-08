@@ -1,5 +1,6 @@
 package com.zagart.navigation.template.presentation.navigation
 
+import android.util.Log
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -17,6 +18,7 @@ class NavigationFlowImpl : NavigationFlow {
     override val destinationFlow = _channel.receiveAsFlow()
 
     override suspend fun send(destination: Destination) {
+        Log.i("Navigation", "Navigation Flow New Sending destination: $destination")
         _channel.send(destination)
     }
 }

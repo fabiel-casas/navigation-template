@@ -4,11 +4,11 @@ import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class NavigationEventDelegateImpl : NavigationEventDelegate {
@@ -38,12 +38,16 @@ fun ViewModel.collectNavigationEvents(screenName: String) {
         throw IllegalStateException("ViewModel must implement NavigationEventDelegate to collect navigation events")
     }
     val navigationFlow = LocalNavigation.current
-    val newDestination = this.navigationDestinationFlow
-        .collectAsStateWithLifecycle(initialValue = null)
-    LaunchedEffect(newDestination.value) {
-        Log.i("Navigation Event", "Screen: $screenName, New Destination: ${newDestination.value?.javaClass?.simpleName}")
-        newDestination.value?.let { destination ->
-            navigationFlow.send(destination)
+    LaunchedEffect(this.navigationDestinationFlow) {
+        Log.i("Navigation", "Collecting navigation events for $screenName")
+        navigationDestinationFlow.collectLatest { newDestination ->
+            Log.i(
+                "Navigation",
+                "Screen: $screenName, New Destination: ${newDestination?.javaClass?.simpleName}"
+            )
+            newDestination?.let { destination ->
+                navigationFlow.send(destination)
+            }
         }
     }
 }

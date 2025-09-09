@@ -13,8 +13,6 @@ import com.zagart.navigation.template.feature.bonus.ui.overview.BonusScreenActio
 import com.zagart.navigation.template.feature.bonus.ui.overview.BonusScreenUi
 import com.zagart.navigation.template.presentation.navigation.BonusNavBarDestination
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
-import com.zagart.navigation.template.presentation.navigation.onBack
-import com.zagart.navigation.template.ui.Tab
 
 @Composable
 fun BonusScreen(
@@ -42,7 +40,7 @@ fun BonusScreen(
     }
     viewModel.collectNavigationEvents("BonusScreen")
 
-    BackHandler(onBack = viewModel::onBack)
+    BackHandler(onBack = viewModel::onBackAction)
     BonusScreenUi(
         state = state,
         modifier = modifier,

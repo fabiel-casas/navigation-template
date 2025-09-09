@@ -5,15 +5,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class NavigationEventDelegateImpl : NavigationEventDelegate {
 
-    private val _navigationFlow = MutableStateFlow<Destination?>(null)
-    override val ViewModel.navigationDestinationFlow: StateFlow<Destination?>
+    private val _navigationFlow = MutableSharedFlow<Destination>()
+    override val ViewModel.navigationDestinationFlow: SharedFlow<Destination?>
         get() = _navigationFlow
 
     @Suppress("MemberVisibilityCanBePrivate")
@@ -52,15 +52,11 @@ fun ViewModel.collectNavigationEvents(screenName: String) {
 
 interface NavigationEventDelegate {
 
-    val ViewModel.navigationDestinationFlow : StateFlow<Destination?>
+    val ViewModel.navigationDestinationFlow: SharedFlow<Destination?>
 
     fun ViewModel.sendDestination(destination: Destination)
-}
 
-fun ViewModel.onBack() {
-    if (this is NavigationEventDelegate) {
+    fun ViewModel.onBack() {
         sendDestination(BackDestination)
-    } else {
-        Log.e("Navigation", "ViewModel must implement NavigationEventDelegate to handle back navigation")
     }
 }

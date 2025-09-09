@@ -74,4 +74,8 @@ class HomeViewModel @Inject constructor() : ViewModel(),
             )
         )
     }
+
+    fun onBackAction() {
+        onBack()
+    }
 }

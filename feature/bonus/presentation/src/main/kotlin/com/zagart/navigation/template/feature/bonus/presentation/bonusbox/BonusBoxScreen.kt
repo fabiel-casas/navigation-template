@@ -13,7 +13,6 @@ import com.zagart.navigation.template.feature.bonus.ui.bonusbox.BonusBoxScreenUi
 import com.zagart.navigation.template.feature.bonus.ui.components.BonusLanesActions
 import com.zagart.navigation.template.presentation.navigation.BonusBoxDestination
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
-import com.zagart.navigation.template.presentation.navigation.onBack
 
 @Composable
 fun BonusBoxScreen(
@@ -30,7 +29,7 @@ fun BonusBoxScreen(
                 onBonusGroupClick = { viewModel.onBonusGroupClick(it) },
                 onProductClick = { viewModel.onProductClick(it) }
             ),
-            onBack = viewModel::onBack,
+            onBack = viewModel::onBackAction,
         )
     }
 
@@ -39,7 +38,7 @@ fun BonusBoxScreen(
     }
     viewModel.collectNavigationEvents("BonusBoxScreen")
 
-    BackHandler(onBack = viewModel::onBack)
+    BackHandler(onBack = viewModel::onBackAction)
     BonusBoxScreenUi(
         state = state,
         modifier = modifier,

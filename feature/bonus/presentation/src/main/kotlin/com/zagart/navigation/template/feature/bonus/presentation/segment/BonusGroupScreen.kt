@@ -12,7 +12,6 @@ import com.zagart.navigation.template.feature.bonus.ui.segment.BonusGroupActions
 import com.zagart.navigation.template.feature.bonus.ui.segment.BonusGroupScreenUi
 import com.zagart.navigation.template.presentation.navigation.BonusGroupDestination
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
-import com.zagart.navigation.template.presentation.navigation.onBack
 
 @Composable
 fun BonusGroupScreen(
@@ -23,7 +22,7 @@ fun BonusGroupScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val actions = remember(viewModel) {
         BonusGroupActions(
-            onBack = viewModel::onBack,
+            onBack = viewModel::onBackAction,
             onProductClick = viewModel::onProductClick,
         )
     }
@@ -33,7 +32,7 @@ fun BonusGroupScreen(
     }
     viewModel.collectNavigationEvents("BonusGroupScreen")
 
-    BackHandler(onBack = viewModel::onBack)
+    BackHandler(onBack = viewModel::onBackAction)
     BonusGroupScreenUi(
         modifier = modifier,
         state = state,

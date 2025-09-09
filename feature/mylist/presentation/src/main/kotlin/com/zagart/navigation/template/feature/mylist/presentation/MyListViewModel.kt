@@ -13,4 +13,8 @@ class MyListViewModel @Inject constructor() : ViewModel(),
 
     fun load(destination: MyListNavBarDestination) {
     }
+
+    fun onBackAction() {
+        onBack()
+    }
 }

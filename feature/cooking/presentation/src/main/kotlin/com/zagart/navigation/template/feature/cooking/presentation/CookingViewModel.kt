@@ -13,4 +13,8 @@ class CookingViewModel @Inject constructor() : ViewModel(),
 
     fun load(destination: Destination) {
     }
+
+    fun onBackAction() {
+        onBack()
+    }
 }

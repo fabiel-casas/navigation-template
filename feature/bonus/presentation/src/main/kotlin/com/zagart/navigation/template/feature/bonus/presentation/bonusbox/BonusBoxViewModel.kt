@@ -80,4 +80,8 @@ class BonusBoxViewModel @Inject constructor() : ViewModel(),
             )
         )
     }
+
+    fun onBackAction() {
+        onBack()
+    }
 }

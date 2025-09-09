@@ -12,7 +12,6 @@ import com.zagart.navigation.template.feature.product.ui.details.ProductDetailsS
 import com.zagart.navigation.template.feature.product.ui.details.ProductDetailsScreenUi
 import com.zagart.navigation.template.presentation.navigation.ProductDetailsDestination
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
-import com.zagart.navigation.template.presentation.navigation.onBack
 
 @Composable
 fun ProductDetailsScreen(
@@ -23,7 +22,7 @@ fun ProductDetailsScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val actions = remember(viewModel) {
         ProductDetailsScreenActions(
-            onBack = viewModel::onBack,
+            onBack = viewModel::onBackAction,
         )
     }
 
@@ -32,7 +31,7 @@ fun ProductDetailsScreen(
     }
     viewModel.collectNavigationEvents("ProductDetailsScreen")
 
-    BackHandler(onBack = viewModel::onBack)
+    BackHandler(onBack = viewModel::onBackAction)
     ProductDetailsScreenUi(
         modifier = modifier,
         state = state,

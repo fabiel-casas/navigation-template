@@ -76,4 +76,8 @@ class BonusViewModel @Inject constructor() : ViewModel(),
             )
         )
     }
+
+    fun onBackAction() {
+        onBack()
+    }
 }

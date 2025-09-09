@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.zagart.navigation.template.presentation.navigation.ProductsNavBarDestination
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
-import com.zagart.navigation.template.presentation.navigation.onBack
 import com.zagart.navigation.template.ui.DummyScreen
 
 @Composable
@@ -22,7 +21,7 @@ fun ProductsScreen(
     viewModel.collectNavigationEvents("ProductsScreen")
 
     BackHandler(onBack = {
-        viewModel.onBack()
+        viewModel.onBackAction()
     })
     DummyScreen(
         modifier = modifier,

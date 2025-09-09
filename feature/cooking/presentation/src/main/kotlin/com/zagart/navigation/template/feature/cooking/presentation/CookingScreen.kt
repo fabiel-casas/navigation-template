@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.zagart.navigation.template.presentation.navigation.CookingNavBarDestination
 import com.zagart.navigation.template.presentation.navigation.collectNavigationEvents
-import com.zagart.navigation.template.presentation.navigation.onBack
 import com.zagart.navigation.template.ui.DummyScreen
 
 @Composable
@@ -21,7 +20,7 @@ fun CookingScreen(
     }
     viewModel.collectNavigationEvents("CookingScreen")
 
-    BackHandler(onBack = viewModel::onBack)
+    BackHandler(onBack = viewModel::onBackAction)
     DummyScreen(
         modifier = modifier,
         title = "Cooking",

@@ -1,5 +1,6 @@
 package com.zagart.navigation.template.presentation.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
@@ -43,7 +44,29 @@ class BackStackNavControllerImpl(
 
     fun addDestination(destination: Destination) {
         if (destination != currentNavBarDestination) {
-            backStack.add(destination)
+            val startNavBarIndex = backStack.indexOfFirst { it::class == destination::class }
+            when {
+                destination is NavBarDestination && startNavBarIndex > -1 -> {
+                    val endNavBarIndex = backStack.indexOfFirst {
+                        it::class != destination::class && it is NavBarDestination
+                    }
+                    val newList = mutableListOf<Destination>()
+                    val group = backStack.toList().subList(startNavBarIndex, endNavBarIndex)
+                    backStack.forEachIndexed { index, destination ->
+                        if (index < startNavBarIndex || index >= endNavBarIndex) {
+                            newList.add(destination)
+                        }
+                    }
+                    newList.addAll(group)
+                    backStack.clear()
+                    backStack.addAll(newList)
+                }
+
+                else -> {
+                    backStack.add(destination)
+                }
+            }
+            Log.i("Navigation", "BackStack Adding destination: ${backStack.toList()}")
         }
     }
 

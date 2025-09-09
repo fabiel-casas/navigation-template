@@ -13,4 +13,8 @@ class ProductsViewModel @Inject constructor() : ViewModel(),
 
     fun load(destination: ProductsNavBarDestination) {
     }
+
+    fun onBackAction() {
+        onBack()
+    }
 }

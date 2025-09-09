@@ -34,6 +34,16 @@ sealed class PanelDestination(
 
 @Parcelize
 @Serializable
+sealed class NoDestination(
+    override val isFullScreen: Boolean = false,
+    override val args: Args = Args(),
+    override val deepLinks: List<String> = emptyList(),
+) : Destination
+
+data object BackDestination : NoDestination()
+
+@Parcelize
+@Serializable
 data class Args(
     val bundleInfo: String? = null, // TODO improve this to support complex data types
     val timestamp: Long = System.currentTimeMillis(),

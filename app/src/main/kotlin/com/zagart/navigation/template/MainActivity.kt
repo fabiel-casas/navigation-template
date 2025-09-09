@@ -71,15 +71,15 @@ class MainActivity : ComponentActivity() {
             bottomBar = {
                 ExampleBottomBar(
                     modifier = Modifier,
-                    currentDestination = currentBackStack.last(),
+                    currentDestination = currentBackStack,
                     onBottomBarItemClick = viewModel::onBottomBarItemClick
                 )
             },
         ) { paddingValues ->
             NavDisplay(
                 modifier = Modifier.padding(paddingValues),
-                backStack = currentBackStack,
-                onBack = { currentBackStack.removeLastOrNull() },
+                backStack = currentBackStack.backStack,
+                onBack = { currentBackStack.popDestination() },
 
                 // In order to add the `ViewModelStoreNavEntryDecorator` (see comment below for why)
                 // we also need to add the default `NavEntryDecorator`s as well. These provide

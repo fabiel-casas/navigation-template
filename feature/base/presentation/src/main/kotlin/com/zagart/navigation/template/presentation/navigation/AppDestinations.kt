@@ -6,10 +6,6 @@ import kotlinx.serialization.Serializable
 
 @Parcelize
 @Serializable
-data object BackDestination : NavBarDestination, Parcelable
-
-@Parcelize
-@Serializable
 data object BonusBoxDestination : PanelDestination(false), Parcelable
 
 @Parcelize

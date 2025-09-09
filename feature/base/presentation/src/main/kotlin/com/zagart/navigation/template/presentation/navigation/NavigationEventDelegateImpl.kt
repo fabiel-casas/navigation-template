@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -25,7 +24,7 @@ class NavigationEventDelegateImpl : NavigationEventDelegate {
                 "Navigation Event",
                 "Simulating delay of $randomTime ms before navigating to ${destination::class.java.simpleName}"
             )
-            delay(randomTime)
+//            delay(randomTime)
             _navigationFlow.emit(destination)
         }
     }

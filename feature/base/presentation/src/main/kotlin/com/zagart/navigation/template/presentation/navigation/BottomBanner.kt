@@ -1,7 +1,6 @@
 package com.zagart.navigation.template.presentation.navigation
 
 import android.os.Parcelable
-import com.zagart.navigation.template.ui.Tab
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
@@ -25,13 +24,13 @@ data object MyListNavBarDestination : NavBarDestination, Parcelable
 @Serializable
 data object ProductsNavBarDestination : NavBarDestination, Parcelable
 
-fun NavBarDestination.from(tabIndex: Int): NavBarDestination {
-    return when (tabIndex) {
-        Tab.HOME.ordinal -> HomeNavBarDestination
-        Tab.BONUS.ordinal -> BonusNavBarDestination
-        Tab.COOKING.ordinal -> CookingNavBarDestination
-        Tab.PRODUCTS.ordinal -> ProductsNavBarDestination
-        Tab.MY_LIST.ordinal -> MyListNavBarDestination
-        else -> throw IllegalArgumentException("Backstack with index $tabIndex does not exist")
+fun NavBarDestination?.toIndex(): Int {
+    return when (this) {
+        HomeNavBarDestination -> 0
+        BonusNavBarDestination -> 1
+        CookingNavBarDestination -> 2
+        ProductsNavBarDestination -> 3
+        MyListNavBarDestination -> 4
+        else -> 0
     }
 }

@@ -8,19 +8,46 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun rememberBackStackNavController(initialDestination: Destination): SnapshotStateList<Destination> {
-    val backStack = remember { mutableStateListOf<Destination>(initialDestination) }
+fun rememberBackStackNavController(initialDestination: Destination): BackStackNavController {
+    val backStackNackController = remember {
+        BackStackNavControllerImpl(initialDestination)
+    }
     val navigationFlow = LocalNavigation.current
         .destinationFlow
     LaunchedEffect(navigationFlow) {
         navigationFlow.collectLatest { newDestination ->
             when (newDestination) {
-                BackDestination -> backStack.removeLastOrNull()
+                BackDestination -> backStackNackController.popDestination()
                 else -> {
-                    backStack.add(newDestination)
+                    backStackNackController.addDestination(newDestination)
                 }
             }
         }
     }
-    return backStack
+    return backStackNackController
+}
+
+interface BackStackNavController {
+    val backStack: SnapshotStateList<Destination>
+    val currentNavBarDestination: NavBarDestination?
+
+    fun popDestination()
+}
+
+class BackStackNavControllerImpl(
+    initialDestination: Destination
+) : BackStackNavController {
+    override val backStack = mutableStateListOf<Destination>(initialDestination)
+    override val currentNavBarDestination: NavBarDestination?
+        get() = backStack.lastOrNull { it is NavBarDestination } as? NavBarDestination
+
+    fun addDestination(destination: Destination) {
+        if (destination != currentNavBarDestination) {
+            backStack.add(destination)
+        }
+    }
+
+    override fun popDestination() {
+        backStack.removeLastOrNull()
+    }
 }
